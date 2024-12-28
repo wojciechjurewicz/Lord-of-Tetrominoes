@@ -11,14 +11,16 @@ class Tetromino():
         self.shape = tetrominos_shapes[self.shape_name][self.rotation]
         self.x = (board_width - len(self.shape)) // 2
         self.y = 0
-        self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 3]
+        self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 4]
 
     # Rotating the piece based on the pre-generated rotations.
-    # X, Y position doesn't change thanks to the SRS guidelines.
+    # X, Y position doesn't change thanks to implementation of so-called Super Rotation System
+    # (official Tetris way for pieces to behave).
     def rotate(self):
-        self.rotation = self.rotation % 3
+        self.rotation += 1
+        self.rotation = self.rotation % 4
         self.shape = tetrominos_shapes[self.shape_name][self.rotation]
-        self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 3]
+        self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 4]
 
     # Moving the piece in specified direction
     def move(self, dx, dy):
@@ -32,7 +34,7 @@ class Game():
         global board_width
         board_width = width
         # Generating empty board
-        self.board = np.zeros((width, height))
+        self.board = np.zeros((height, width))
 
         # Initial score set to 0
         self.score = 0
@@ -100,8 +102,17 @@ class Game():
             pass
         return True
 
+    # Function responsible for placing a piece. It adds the current tetromino to the board matrix and generates a new one
     def place(self):
         self.board[self.current_tetromino.y:self.current_tetromino.y + self.current_tetromino.shape.shape[0],
         self.current_tetromino.x:self.current_tetromino.x + self.current_tetromino.shape.shape[
             1]] += self.current_tetromino.shape
         self.new_piece()
+
+    # Function returning the board along with current tetromino. Used for display purpouses.
+    def get_game_board(self):
+        board_snapshot = self.board.copy()
+        board_snapshot[self.current_tetromino.y:self.current_tetromino.y + self.current_tetromino.shape.shape[0],
+        self.current_tetromino.x:self.current_tetromino.x + self.current_tetromino.shape.shape[
+            1]] += self.current_tetromino.shape
+        return board_snapshot
