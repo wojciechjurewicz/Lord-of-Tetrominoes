@@ -52,6 +52,7 @@ class Game():
         self.score = 0
         self.level = 1
         self.lines = 0
+        self.game_over = False
 
         # Initialization of queue of pieces and generating first piece to play
         self.pieces_queue = []
@@ -59,8 +60,6 @@ class Game():
 
         self.piece_on_hold = None
 
-    def game_over(self):
-        sys.exit()
 
     # Function taking next piece from the queue and maintaining constant number of 3 pieces in the queue
     def new_piece(self):
@@ -132,7 +131,7 @@ class Game():
         del self.current_tetromino
         self.new_piece()
         if np.count_nonzero(self.board) + self.current_tetromino.volume != np.count_nonzero(self.get_board_with_tetromino()):
-            self.game_over()
+            self.game_over = True
         # Exception to stop hard drop loop
         raise Exception("Block placed")
 
@@ -178,9 +177,7 @@ class Game():
             lines_cleared += 1
 
         self.lines += lines_cleared
-        if self.lines >= 10:
-            self.level += 1
-            self.lines -= 10
+        self.level = self.lines//10
         self.score += scoring[lines_cleared]
         self.board = np.array(new_board)
 

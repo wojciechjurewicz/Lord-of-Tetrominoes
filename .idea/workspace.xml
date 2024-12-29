@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Implemented tetrominos rotation with wall kicks">
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Scoring and loss condition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -283,7 +285,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735491916381</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Scoring and loss condition">
+      <option name="closed" value="true" />
+      <created>1735497572259</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1735497572259</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -297,6 +307,7 @@
     <MESSAGE value="Piece rotation in both directions" />
     <MESSAGE value="Ghost piece visualization" />
     <MESSAGE value="Implemented tetrominos rotation with wall kicks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented tetrominos rotation with wall kicks" />
+    <MESSAGE value="Scoring and loss condition" />
+    <option name="LAST_COMMIT_MESSAGE" value="Scoring and loss condition" />
   </component>
 </project>

@@ -16,10 +16,9 @@ pygame.init()
 screen = pygame.display.set_mode((window_width, window_height))
 pygame.display.set_caption('Lord of Tetrominoes')
 
-game = Game(board_width, board_height)
 display = Display(screen, board_width, board_height)
 
-def handle_input(last_move_time):
+def handle_input(game, last_move_time):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -45,15 +44,40 @@ def handle_input(last_move_time):
 
 def main():
     clock = pygame.time.Clock()
-    last_move_time = pygame.time.get_ticks()
+
+    # 0 - starting screen; 1 - main game; 2 - game over screen
+    scene_id = 0
+
     while True:
-        automove_interval = initial_automove_interval * (0.9)**(game.level)
-        current_time = pygame.time.get_ticks()
-        if current_time - last_move_time >= automove_interval:
-            game.move(0, 1)
+        if scene_id == 0:
+            display.update(scene_id)
+            #do sth...
+
+            #start game when start button pressed
             last_move_time = pygame.time.get_ticks()
-        last_move_time = handle_input(last_move_time)
-        display.update(game)
+            game = Game(board_width, board_height)
+            scene_id = 1
+
+        elif scene_id == 1:
+            automove_interval = initial_automove_interval * (0.9) ** (game.level)
+            current_time = pygame.time.get_ticks()
+            if current_time - last_move_time >= automove_interval:
+                game.move(0, 1)
+                last_move_time = pygame.time.get_ticks()
+            last_move_time = handle_input(game, last_move_time)
+
+            display.update(scene_id, game)
+
+            if game.game_over:
+                scene_id = 0
+                del game
+
+        elif scene_id == 2:
+            display.update(scene_id)
+            # do sth...
+
+            # if pressed button to leave to main menu, del game
+
         clock.tick(30)
 
 if __name__ == '__main__':
