@@ -1,6 +1,7 @@
 import numpy as np
 import random
 from tetrominos import tetrominos as tetrominos_shapes
+from tetrominos import jlstz_kicks, i_kicks
 
 
 class Tetromino():
@@ -17,10 +18,12 @@ class Tetromino():
     # Rotating the piece based on the pre-generated rotations.
     # X, Y position doesn't change thanks to implementation of so-called Super Rotation System
     # (official Tetris way for pieces to behave).
-    def rotate(self, dr):
+    def rotate(self, dr, dx, dy):
         self.shape = self.get_rotated_shape(dr)
         self.rotation += dr
         self.rotation = self.rotation % 4
+        self.x += dx
+        self.y += dy
 
     # Moving the piece in specified direction
     def move(self, dx, dy):
@@ -73,10 +76,13 @@ class Game():
             if drop:
                 self.place()
 
-    # Function rotating the current piece clockwise
+    # Function rotating the current piece
     def rotate(self, dr):
-        if not self.collision_rotation(dr):
-            self.current_tetromino.rotate(dr)
+        kicks = self.get_kicks(self.current_tetromino.rotation, dr, self.current_tetromino.shape_name)
+        for dx, dy in kicks:
+            if not self.collision_rotation(dr, dx, dy):
+                self.current_tetromino.rotate(dr, dx, dy)
+                break
 
     # Dropping the pieces all the way to the bottom
     def hard_drop(self):
@@ -98,9 +104,9 @@ class Game():
 
     # Function checking whether there will be a collision while rotating.
     # It works similarly to the checking collision on move, it compares number of non-zero elements
-    def collision_rotation(self, dr):
+    def collision_rotation(self, dr, dx, dy):
         current = self.get_board_with_tetromino()
-        tried_move = self.get_board_with_tetromino(shape=self.current_tetromino.get_rotated_shape(dr))
+        tried_move = self.get_board_with_tetromino(shape=self.current_tetromino.get_rotated_shape(dr), x=self.current_tetromino.x + dx, y=self.current_tetromino.y + dy)
         if np.count_nonzero(current) == np.count_nonzero(tried_move):
             return False
         return True
@@ -182,3 +188,9 @@ class Game():
                 if value != 0:
                     ghost_piece_position.append((self.current_tetromino.y + i + dy, self.current_tetromino.x + j))
         return ghost_piece_position
+
+    def get_kicks(self, r, dr, shape_name):
+        if shape_name == "I":
+            return i_kicks[(r, dr)]
+        else:
+            return jlstz_kicks[(r, dr)]
