@@ -18,15 +18,20 @@ class Display:
         self.screen = screen
 
     def update(self, game):
-        self.draw(game.get_board_with_tetromino(game.board))
+        self.draw(game.get_board_with_tetromino(game.board), game.ghost_piece())
 
         # Updating the display
         pygame.display.flip()
 
     # Drawing the playing grid square by square
-    def draw(self, board):
+    def draw(self, board, ghost_piece):
         for row in range(self.board_height):
             for column in range(self.board_width):
                 color = COLORS[int(board[row][column])]
                 rect = pygame.Rect(column*30, row*30, 29, 29)
                 pygame.draw.rect(self.screen, color, rect)
+
+        for y, x in ghost_piece:
+            if board[y][x] == 0:
+                rect = pygame.Rect(x * 30, y * 30, 29, 29)
+                pygame.draw.rect(self.screen, 'pink', rect)

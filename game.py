@@ -168,3 +168,17 @@ class Game():
             else:
                 self.current_tetromino, self.piece_on_hold = Tetromino(self.piece_on_hold,
                                                                        True), self.current_tetromino.shape_name
+
+    def ghost_piece(self):
+
+        ghost_piece_position = []
+
+        dy = 0
+        while not self.collision_move(0 , dy):
+            dy += 1
+        dy -= 1
+        for i, row in enumerate(self.current_tetromino.shape):
+            for j, value in enumerate(row):
+                if value != 0:
+                    ghost_piece_position.append((self.current_tetromino.y + i + dy, self.current_tetromino.x + j))
+        return ghost_piece_position
