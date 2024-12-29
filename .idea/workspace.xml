@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Scoring and loss condition">
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="First step into creating scenes for starting screen, game screen and game over screen">
+      <change afterPath="$PROJECT_DIR$/assets/colors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -293,7 +293,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735497572259</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="First step into creating scenes for starting screen, game screen and game over screen">
+      <option name="closed" value="true" />
+      <created>1735502127074</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1735502127074</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -308,6 +316,7 @@
     <MESSAGE value="Ghost piece visualization" />
     <MESSAGE value="Implemented tetrominos rotation with wall kicks" />
     <MESSAGE value="Scoring and loss condition" />
-    <option name="LAST_COMMIT_MESSAGE" value="Scoring and loss condition" />
+    <MESSAGE value="First step into creating scenes for starting screen, game screen and game over screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="First step into creating scenes for starting screen, game screen and game over screen" />
   </component>
 </project>

@@ -6,17 +6,14 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-window_width = int(config['WindowSettings']['Width'])
-window_height = int(config['WindowSettings']['Height'])
 board_width = int(config['BoardSettings']['Width'])
-board_height = int(config['BoardSettings']['Height']) + int(config['BoardSettings']['SafeZoneHeight'])
+board_height = int(config['BoardSettings']['Height'])
 initial_automove_interval = int(config['GameSettings']['AutoMoveInterval'])
 
 pygame.init()
-screen = pygame.display.set_mode((window_width, window_height))
-pygame.display.set_caption('Lord of Tetrominoes')
 
-display = Display(screen, board_width, board_height)
+
+display = Display()
 
 def handle_input(game, last_move_time):
     for event in pygame.event.get():
