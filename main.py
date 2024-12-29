@@ -37,6 +37,8 @@ def handle_input(last_move_time):
             elif event.key == pygame.K_SPACE:
                 game.hard_drop()
                 last_move_time = pygame.time.get_ticks()
+            elif event.key == pygame.K_c:
+                game.hold()
     return last_move_time
 
 def main():

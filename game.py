@@ -5,13 +5,14 @@ from tetrominos import tetrominos as tetrominos_shapes
 
 class Tetromino():
     # Creating specified piece at the top of the middle of the screen with rotation 0
-    def __init__(self, shape):
+    def __init__(self, shape, hold=False):
         self.rotation = 0
         self.shape_name = shape
         self.shape = tetrominos_shapes[self.shape_name][self.rotation]
         self.x = (board_width - len(self.shape)) // 2
         self.y = 0
         self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 4]
+        self.hold = hold
 
     # Rotating the piece based on the pre-generated rotations.
     # X, Y position doesn't change thanks to implementation of so-called Super Rotation System
@@ -43,6 +44,8 @@ class Game():
         # Initialization of queue of pieces and generating first piece to play
         self.pieces_queue = []
         self.new_piece()
+
+        self.piece_on_hold = None
 
     # Function taking next piece from the queue and maintaining constant number of 3 pieces in the queue
     def new_piece(self):
@@ -149,3 +152,13 @@ class Game():
             new_board.insert(0, np.zeros_like(old_board[0]))
 
         self.board = np.array(new_board)
+
+    def hold(self):
+        if not self.current_tetromino.hold:
+            if self.piece_on_hold is None:
+                self.piece_on_hold = self.current_tetromino.shape_name
+                self.new_piece()
+                self.current_tetromino.hold = True
+            else:
+                self.current_tetromino, self.piece_on_hold = Tetromino(self.piece_on_hold, True), self.current_tetromino.shape_name
+
