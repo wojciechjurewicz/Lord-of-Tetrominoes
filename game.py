@@ -65,70 +65,47 @@ class Game():
     # Function checking whether there will occur a collision while moving horizontally or vertically.
     # It compares the number of non-zero elements in a state before the move and after the move.
     def collision_move(self, dx, dy):
-        try:
-            if np.count_nonzero(self.board[
-                                self.current_tetromino.y:self.current_tetromino.y + self.current_tetromino.shape.shape[
-                                    0],
-                                self.current_tetromino.x:self.current_tetromino.x + self.current_tetromino.shape.shape[
-                                    1]] + self.current_tetromino.shape) == np.count_nonzero(self.board[
-                                                                                            self.current_tetromino.y + dy:self.current_tetromino.y +
-                                                                                                                          self.current_tetromino.shape.shape[
-                                                                                                                              0] + dy,
-                                                                                            self.current_tetromino.x + dx:self.current_tetromino.x +
-                                                                                                                          self.current_tetromino.shape.shape[
-                                                                                                                              1] + dx] + self.current_tetromino.shape):
-                return False
-        except ValueError:
-            pass
+        current = self.get_board_with_tetromino()
+        tried_move = self.get_board_with_tetromino(x=self.current_tetromino.x + dx, y=self.current_tetromino.y + dy)
+        if np.count_nonzero(current) == np.count_nonzero(tried_move):
+            return False
         return True
-
-    def collision_move(self, dx, dy):
-        new_x = self.current_tetromino.x + dx
-        new_y = self.current_tetromino.y + dy
-
-        for i, row in enumerate(self.current_tetromino.shape):
-            for j, value in enumerate(row):
-                if value != 0:
-                    chunk_x = new_x + j
-                    chunk_y = new_y + i
-                    if chunk_x < 0 or chunk_x >= board_width or chunk_y >= len(self.board) or chunk_y < 0:
-                        return True
-                    if self.board[chunk_y][chunk_x] != 0:
-                        return True
-        return False
-
 
     # Function checking whether there will be a collision while rotating.
     # It works similarly to the checking collision on move, it compares number of non-zero elements
     def collision_rotation(self):
-        try:
-            if np.count_nonzero(self.board[
-                                self.current_tetromino.y:self.current_tetromino.y + self.current_tetromino.shape.shape[
-                                    0],
-                                self.current_tetromino.x:self.current_tetromino.x + self.current_tetromino.shape.shape[
-                                    1]] + self.current_tetromino.shape) == np.count_nonzero(self.board[
-                                                                                            self.current_tetromino.y:self.current_tetromino.y +
-                                                                                                                     self.current_tetromino.next_rotation_shape.shape[
-                                                                                                                         0],
-                                                                                            self.current_tetromino.x:self.current_tetromino.x +
-                                                                                                                     self.current_tetromino.next_rotation_shape.shape[
-                                                                                                                         1]] + self.current_tetromino.next_rotation_shape):
-                return False
-        except ValueError:
-            pass
+        current = self.get_board_with_tetromino()
+        tried_move = self.get_board_with_tetromino(shape=self.current_tetromino.next_rotation_shape)
+        if np.count_nonzero(current) == np.count_nonzero(tried_move):
+            return False
         return True
 
-    # Function responsible for placing a piece. It adds the current tetromino to the board matrix and generates a new one
+    # Function responsible for placing a piece.
+    # It updates the board and generates a new piece
     def place(self):
-        self.board[self.current_tetromino.y:self.current_tetromino.y + self.current_tetromino.shape.shape[0],
-        self.current_tetromino.x:self.current_tetromino.x + self.current_tetromino.shape.shape[
-            1]] += self.current_tetromino.shape
+        self.board = self.get_board_with_tetromino()
         self.new_piece()
 
-    # Function returning the board along with current tetromino. Used for display purpouses.
-    def get_game_board(self):
-        board_snapshot = self.board.copy()
-        board_snapshot[self.current_tetromino.y:self.current_tetromino.y + self.current_tetromino.shape.shape[0],
-        self.current_tetromino.x:self.current_tetromino.x + self.current_tetromino.shape.shape[
-            1]] += self.current_tetromino.shape
-        return board_snapshot
+    # Function returning the board along with current tetromino.
+    # Used for checking for collisions, placing a piece and display purposes.
+    def get_board_with_tetromino(self, board=None, shape=None, x=None, y=None):
+        # If no arguments are given, we use the default ones.
+        # This cannot be done in the function definition as the arguments are mutable objects
+        if board is None:
+            board = self.board
+        if shape is None:
+            shape = self.current_tetromino.shape
+        if x is None:
+            x = self.current_tetromino.x
+        if y is None:
+            y = self.current_tetromino.y
+
+        # Copy is necessary in order to not modify the original board
+        board = board.copy()
+
+        for i, row in enumerate(shape):
+            for j, value in enumerate(row):
+                if value != 0:
+                    if x + j >= 0 and x + j < board_width and y + i < len(board) and y + i >= 0:
+                        board[y + i][x + j] = value
+        return board
