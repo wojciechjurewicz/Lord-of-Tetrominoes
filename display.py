@@ -1,7 +1,7 @@
 import pygame
 
 # Colors for each tetromino and background.
-#Each tetromino has in it's matrix numbers from below which are then translated into colors.
+# Each tetromino has in its matrix numbers from below which are then translated into colors.
 COLORS = {1: 'turquoise1',
           2: 'coral',
           3: 'MediumOrchid4',
@@ -18,7 +18,7 @@ class Display:
         self.screen = screen
 
     def update(self, game):
-        self.draw(game.get_game_board())
+        self.draw(game.get_board_with_tetromino(game.board))
 
         # Updating the display
         pygame.display.flip()
@@ -28,5 +28,5 @@ class Display:
         for row in range(self.board_height):
             for column in range(self.board_width):
                 color = COLORS[int(board[row][column])]
-                rect = pygame.Rect(column*25, row*25, 25, 25)
+                rect = pygame.Rect(column*30, row*30, 29, 29)
                 pygame.draw.rect(self.screen, color, rect)
