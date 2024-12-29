@@ -34,7 +34,7 @@ class Game():
         global board_width
         board_width = width
         # Generating empty board
-        self.board = np.zeros((height, width))
+        self.board = np.zeros((height, width), dtype=int)
 
         # Initial score set to 0
         self.score = 0
@@ -81,6 +81,22 @@ class Game():
         except ValueError:
             pass
         return True
+
+    def collision_move(self, dx, dy):
+        new_x = self.current_tetromino.x + dx
+        new_y = self.current_tetromino.y + dy
+
+        for i, row in enumerate(self.current_tetromino.shape):
+            for j, value in enumerate(row):
+                if value != 0:
+                    chunk_x = new_x + j
+                    chunk_y = new_y + i
+                    if chunk_x < 0 or chunk_x >= board_width or chunk_y >= len(self.board) or chunk_y < 0:
+                        return True
+                    if self.board[chunk_y][chunk_x] != 0:
+                        return True
+        return False
+
 
     # Function checking whether there will be a collision while rotating.
     # It works similarly to the checking collision on move, it compares number of non-zero elements
