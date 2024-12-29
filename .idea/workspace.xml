@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Game logic - hard dropping, clearing rows, auto move">
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Game logic - piece holding">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -251,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735439577869</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Game logic - piece holding">
+      <option name="closed" value="true" />
+      <created>1735480319408</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1735480319408</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -261,6 +269,7 @@
     <MESSAGE value="Created initial Pygame display along with input handling" />
     <MESSAGE value="Updated checking for collision on move" />
     <MESSAGE value="Game logic - hard dropping, clearing rows, auto move" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game logic - hard dropping, clearing rows, auto move" />
+    <MESSAGE value="Game logic - piece holding" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game logic - piece holding" />
   </component>
 </project>

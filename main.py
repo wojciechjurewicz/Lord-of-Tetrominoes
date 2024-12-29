@@ -33,12 +33,14 @@ def handle_input(last_move_time):
             elif event.key == pygame.K_LEFT:
                 game.move(-1, 0)
             elif event.key == pygame.K_UP:
-                game.rotate()
+                game.rotate(1)
             elif event.key == pygame.K_SPACE:
                 game.hard_drop()
                 last_move_time = pygame.time.get_ticks()
             elif event.key == pygame.K_c:
                 game.hold()
+            elif event.key == pygame.K_z:
+                game.rotate(-1)
     return last_move_time
 
 def main():

@@ -17,16 +17,18 @@ class Tetromino():
     # Rotating the piece based on the pre-generated rotations.
     # X, Y position doesn't change thanks to implementation of so-called Super Rotation System
     # (official Tetris way for pieces to behave).
-    def rotate(self):
-        self.rotation += 1
+    def rotate(self, dr):
+        self.shape = self.get_rotated_shape(dr)
+        self.rotation += dr
         self.rotation = self.rotation % 4
-        self.shape = tetrominos_shapes[self.shape_name][self.rotation]
-        self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 4]
 
     # Moving the piece in specified direction
     def move(self, dx, dy):
         self.x += dx
         self.y += dy
+
+    def get_rotated_shape(self, dr):
+        return tetrominos_shapes[self.shape_name][(self.rotation + dr) % 4]
 
 
 class Game():
@@ -69,12 +71,12 @@ class Game():
                 except Exception:
                     pass
             if drop:
-                    self.place()
+                self.place()
 
     # Function rotating the current piece clockwise
-    def rotate(self):
-        if not self.collision_rotation():
-            self.current_tetromino.rotate()
+    def rotate(self, dr):
+        if not self.collision_rotation(dr):
+            self.current_tetromino.rotate(dr)
 
     # Dropping the pieces all the way to the bottom
     def hard_drop(self):
@@ -96,9 +98,9 @@ class Game():
 
     # Function checking whether there will be a collision while rotating.
     # It works similarly to the checking collision on move, it compares number of non-zero elements
-    def collision_rotation(self):
+    def collision_rotation(self, dr):
         current = self.get_board_with_tetromino()
-        tried_move = self.get_board_with_tetromino(shape=self.current_tetromino.next_rotation_shape)
+        tried_move = self.get_board_with_tetromino(shape=self.current_tetromino.get_rotated_shape(dr))
         if np.count_nonzero(current) == np.count_nonzero(tried_move):
             return False
         return True
@@ -153,12 +155,16 @@ class Game():
 
         self.board = np.array(new_board)
 
+    # Function for holding a piece
     def hold(self):
+        # Check if player didn't already hold in this round
         if not self.current_tetromino.hold:
+            # If player hasn't held before, hold a piece and generate a new one
             if self.piece_on_hold is None:
                 self.piece_on_hold = self.current_tetromino.shape_name
                 self.new_piece()
                 self.current_tetromino.hold = True
+            # If player held before, swap the current and held pieces
             else:
-                self.current_tetromino, self.piece_on_hold = Tetromino(self.piece_on_hold, True), self.current_tetromino.shape_name
-
+                self.current_tetromino, self.piece_on_hold = Tetromino(self.piece_on_hold,
+                                                                       True), self.current_tetromino.shape_name
