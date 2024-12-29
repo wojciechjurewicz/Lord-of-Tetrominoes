@@ -1,5 +1,10 @@
+import sys
+
 import numpy as np
 import random
+
+import pygame
+
 from tetrominos import tetrominos as tetrominos_shapes
 from tetrominos import jlstz_kicks, i_kicks
 
@@ -14,6 +19,7 @@ class Tetromino():
         self.y = 0
         self.next_rotation_shape = tetrominos_shapes[self.shape_name][(self.rotation + 1) % 4]
         self.hold = hold
+        self.volume = np.count_nonzero(self.shape)
 
     # Rotating the piece based on the pre-generated rotations.
     # X, Y position doesn't change thanks to implementation of so-called Super Rotation System
@@ -44,13 +50,17 @@ class Game():
 
         # Initial score set to 0
         self.score = 0
-        self.game_over = False
+        self.level = 1
+        self.lines = 0
 
         # Initialization of queue of pieces and generating first piece to play
         self.pieces_queue = []
         self.new_piece()
 
         self.piece_on_hold = None
+
+    def game_over(self):
+        sys.exit()
 
     # Function taking next piece from the queue and maintaining constant number of 3 pieces in the queue
     def new_piece(self):
@@ -61,6 +71,8 @@ class Game():
 
     # Function moving the piece in given direction (y increases downwards)
     def move(self, dx, dy, drop=False):
+        if dy == 1:
+            self.score += 1
         if not self.collision_move(dx, dy):
             self.current_tetromino.x += dx
             self.current_tetromino.y += dy
@@ -90,6 +102,7 @@ class Game():
             # Stop when bottom reached
             try:
                 self.move(0, 1, True)
+                self.score += 1
             except Exception:
                 break
 
@@ -118,6 +131,8 @@ class Game():
         self.clear_rows()
         del self.current_tetromino
         self.new_piece()
+        if np.count_nonzero(self.board) + self.current_tetromino.volume != np.count_nonzero(self.get_board_with_tetromino()):
+            self.game_over()
         # Exception to stop hard drop loop
         raise Exception("Block placed")
 
@@ -149,6 +164,8 @@ class Game():
     def clear_rows(self):
         old_board = self.board.copy()
         new_board = []
+        lines_cleared = 0
+        scoring = (0, 100, 300, 500, 800)
 
         # We copy all rows that are not full
         for row in old_board:
@@ -158,7 +175,13 @@ class Game():
         # Then we as many empty rows as many full we have removed
         while len(new_board) < len(old_board):
             new_board.insert(0, np.zeros_like(old_board[0]))
+            lines_cleared += 1
 
+        self.lines += lines_cleared
+        if self.lines >= 10:
+            self.level += 1
+            self.lines -= 10
+        self.score += scoring[lines_cleared]
         self.board = np.array(new_board)
 
     # Function for holding a piece

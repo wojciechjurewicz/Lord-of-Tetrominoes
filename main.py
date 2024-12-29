@@ -10,7 +10,7 @@ window_width = int(config['WindowSettings']['Width'])
 window_height = int(config['WindowSettings']['Height'])
 board_width = int(config['BoardSettings']['Width'])
 board_height = int(config['BoardSettings']['Height']) + int(config['BoardSettings']['SafeZoneHeight'])
-automove_interval = int(config['GameSettings']['AutoMoveInterval'])
+initial_automove_interval = int(config['GameSettings']['AutoMoveInterval'])
 
 pygame.init()
 screen = pygame.display.set_mode((window_width, window_height))
@@ -47,6 +47,7 @@ def main():
     clock = pygame.time.Clock()
     last_move_time = pygame.time.get_ticks()
     while True:
+        automove_interval = initial_automove_interval * (0.9)**(game.level)
         current_time = pygame.time.get_ticks()
         if current_time - last_move_time >= automove_interval:
             game.move(0, 1)
