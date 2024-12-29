@@ -52,15 +52,35 @@ class Game():
         self.current_tetromino = Tetromino(self.pieces_queue.pop())
 
     # Function moving the piece in given direction (y increases downwards)
-    def move(self, dx, dy):
+    def move(self, dx, dy, drop=False):
         if not self.collision_move(dx, dy):
             self.current_tetromino.x += dx
             self.current_tetromino.y += dy
+        # If there is a collision and player tried to move piece downwards, place it
+        elif dy == 1:
+            # If we are not dropping the piece to the bottom, we ignore the exception
+            # The exception stops the dropping loop
+            if not drop:
+                try:
+                    self.place()
+                except Exception:
+                    pass
+            if drop:
+                    self.place()
 
     # Function rotating the current piece clockwise
     def rotate(self):
         if not self.collision_rotation():
             self.current_tetromino.rotate()
+
+    # Dropping the pieces all the way to the bottom
+    def hard_drop(self):
+        while True:
+            # Stop when bottom reached
+            try:
+                self.move(0, 1, True)
+            except Exception:
+                break
 
     # Function checking whether there will occur a collision while moving horizontally or vertically.
     # It compares the number of non-zero elements in a state before the move and after the move.
@@ -84,7 +104,11 @@ class Game():
     # It updates the board and generates a new piece
     def place(self):
         self.board = self.get_board_with_tetromino()
+        self.clear_rows()
+        del self.current_tetromino
         self.new_piece()
+        # Exception to stop hard drop loop
+        raise Exception("Block placed")
 
     # Function returning the board along with current tetromino.
     # Used for checking for collisions, placing a piece and display purposes.
@@ -109,3 +133,19 @@ class Game():
                     if x + j >= 0 and x + j < board_width and y + i < len(board) and y + i >= 0:
                         board[y + i][x + j] = value
         return board
+
+    # Functino for clearing full rows
+    def clear_rows(self):
+        old_board = self.board.copy()
+        new_board = []
+
+        # We copy all rows that are not full
+        for row in old_board:
+            if np.count_nonzero(row) != len(row):
+                new_board.append(row)
+
+        # Then we as many empty rows as many full we have removed
+        while len(new_board) < len(old_board):
+            new_board.insert(0, np.zeros_like(old_board[0]))
+
+        self.board = np.array(new_board)
