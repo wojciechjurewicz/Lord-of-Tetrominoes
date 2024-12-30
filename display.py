@@ -23,17 +23,23 @@ class Display:
         # Assets loading
         start_background_path = config['Assets']['StartBackground']
         game_background_path = config['Assets']['GameBackground']
+        gameover_background_path = config['Assets']['GameOverBackground']
         grid_background_path = config['Assets']['GridBackground']
         block_path = config['Assets']['Block']
+        empty_block_path = config['Assets']['EmptyBlock']
 
         self.start_background = pygame.image.load(start_background_path).convert()
         self.start_background = pygame.transform.scale(self.start_background, (1920, 1080))
         self.game_background = pygame.image.load(game_background_path).convert()
         self.game_background = pygame.transform.scale(self.game_background, (1920, 1080))
+        self.gameover_background = pygame.image.load(gameover_background_path).convert()
+        self.gameover_background = pygame.transform.scale(self.gameover_background, (1920, 1080))
         self.grid_background = pygame.image.load(grid_background_path).convert()
         self.grid_background = pygame.transform.scale(self.grid_background, (400, 880))
         self.block_texture = pygame.image.load(block_path).convert_alpha()
         self.block_texture = pygame.transform.scale(self.block_texture, (40, 40))
+        self.empty_block_texture = pygame.image.load(empty_block_path).convert_alpha()
+        self.empty_block_texture = pygame.transform.scale(self.empty_block_texture, (40, 40))
 
         self.play_button = None
         self.quit_button = None
@@ -54,8 +60,6 @@ class Display:
             self.draw_playing_grid(game.get_board_with_tetromino(game.board), game.ghost_piece())
             self.draw_score(game.score, game.level, game.lines)
             self.draw_queue_hold(game.pieces_queue, game.piece_on_hold)
-            self.pause_button()
-            self.music_buttion()
         # Draw game over screen
         elif scene_id == 2:
             self.draw_game_over_screen()
@@ -99,7 +103,7 @@ class Display:
         hover_color = pygame.Color('#1c181f')  # Darker color for hover effect
         outline_color = pygame.Color('#fcf58e')
         text_color = pygame.Color('white')
-        button_rect = pygame.Rect(780, 868, 265, 62)
+        button_rect = pygame.Rect(820, 915, 300, 70)
 
         # Check if button is hovered
         mouse_pos = pygame.mouse.get_pos()
@@ -120,8 +124,8 @@ class Display:
     def draw_playing_grid(self, board, ghost_piece):
         self.screen.blit(self.game_background, (0, 0))
         # Initialization of surface - grid for the tetris game
-        grid_surface = pygame.Surface((400, 880))
-        grid_surface.blit(self.grid_background, (0, 0))
+        grid_surface = pygame.Surface((400, 880), pygame.SRCALPHA)
+        #grid_surface.blit(self.grid_background, (0, 0))
 
         # Drawing the playing grid square by square
         for row in range(self.board_height):
@@ -130,7 +134,10 @@ class Display:
                 rect = pygame.Rect(column*40, row*40, 39, 39)
 
                 # Get the texture and color it
-                colored_block = self.block_texture.copy()
+                if int(board[row][column]) == 0:
+                    colored_block = self.empty_block_texture.copy()
+                else:
+                    colored_block = self.block_texture.copy()
                 colored_block.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
 
                 grid_surface.blit(colored_block, rect.topleft) # Place it on the surface
@@ -152,23 +159,23 @@ class Display:
 
     def draw_score(self, points, level, lines):
         # Surface for scores
-        score_surface = pygame.Surface((280, 280))
-        score_surface.fill('brown')
+        score_surface = pygame.Surface((380, 280), pygame.SRCALPHA)
+        score_surface.fill((0, 0, 0, 170))
 
-        self.draw_text(140, 65, f'SCORE: {points}', score_surface, 40, 'black', 'Arial')
-        self.draw_text(140, 135, f'LEVEL: {level}', score_surface, 40, 'black', 'Arial')
-        self.draw_text(140, 205, f'LINES: {lines}', score_surface, 40, 'black', 'Arial')
+        self.draw_text(190, 65, f'SCORE: {points}', score_surface, 40, 'grey', 'Arial')
+        self.draw_text(190, 135, f'LEVEL: {level}', score_surface, 40, 'grey', 'Arial')
+        self.draw_text(190, 205, f'LINES: {lines}', score_surface, 40, 'grey', 'Arial')
 
-        self.screen.blit(score_surface, (240, 300))
+        self.screen.blit(score_surface, (180, 300))
 
     def draw_queue_hold(self, queue, hold):
-        queue_hold_surface = pygame.Surface((280, 880))
-        queue_hold_surface.fill('brown')
-        self.draw_text(140, 60, 'NEXT', queue_hold_surface, 40, 'black', 'Arial')
+        queue_hold_surface = pygame.Surface((280, 880), pygame.SRCALPHA)
+        queue_hold_surface.fill((0, 0, 0, 170))
+        self.draw_text(140, 60, 'NEXT', queue_hold_surface, 40, 'grey', 'Arial')
         self.draw_shape_for_queue(queue[0], 140, 140, queue_hold_surface)
         self.draw_shape_for_queue(queue[1], 140, 340, queue_hold_surface)
         self.draw_shape_for_queue(queue[2], 140, 540, queue_hold_surface)
-        self.draw_text(140, 650, 'HOLD', queue_hold_surface, 40, 'black', 'Arial')
+        self.draw_text(140, 650, 'HOLD', queue_hold_surface, 40, 'grey', 'Arial')
         if hold is not None:
             self.draw_shape_for_queue(hold, 140, 740, queue_hold_surface)
         self.screen.blit(queue_hold_surface, (1480, 100))
@@ -192,11 +199,5 @@ class Display:
         shapebox.center = (x, y)
         surface.blit(shape_surface, shapebox)
 
-    def pause_button(self):
-        pass
-
-    def music_buttion(self):
-        pass
-
     def draw_game_over_screen(self):
-        pass
+        self.screen.blit(self.gameover_background, (0, 0))
