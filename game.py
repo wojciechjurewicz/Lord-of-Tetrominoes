@@ -66,7 +66,7 @@ class Game():
         # We are making the queue of length 4 as we are taking a piece from it right away.
         while len(self.pieces_queue) != 4:
             self.pieces_queue.append(random.choice(list(tetrominos_shapes.keys())))
-        self.current_tetromino = Tetromino(self.pieces_queue.pop())
+        self.current_tetromino = Tetromino(self.pieces_queue.pop(0))
 
     # Function moving the piece in given direction (y increases downwards)
     def move(self, dx, dy, drop=False):
