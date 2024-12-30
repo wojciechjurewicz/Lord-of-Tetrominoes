@@ -54,7 +54,9 @@ class Display:
         self.screen.fill('black')
 
     def draw_start_screen(self):
-        pass
+        title_surface = pygame.Surface((1000, 300))
+        title_surface.fill('brown')
+        self.screen.blit(title_surface, (460, 100))
 
     def draw_playing_grid(self, board, ghost_piece):
         # Initialization of surface - grid for the tetris game
@@ -102,12 +104,13 @@ class Display:
     def draw_queue_hold(self, queue, hold):
         queue_hold_surface = pygame.Surface((280, 880))
         queue_hold_surface.fill('brown')
-        print(hold)
-        self.draw_shape_for_queue(queue[0], 140, 110, queue_hold_surface)
-        self.draw_shape_for_queue(queue[1], 140, 330, queue_hold_surface)
-        self.draw_shape_for_queue(queue[2], 140, 550, queue_hold_surface)
+        self.draw_text(140, 60, 'NEXT', queue_hold_surface, 40, 'black', 'Arial')
+        self.draw_shape_for_queue(queue[0], 140, 140, queue_hold_surface)
+        self.draw_shape_for_queue(queue[1], 140, 340, queue_hold_surface)
+        self.draw_shape_for_queue(queue[2], 140, 540, queue_hold_surface)
+        self.draw_text(140, 650, 'HOLD', queue_hold_surface, 40, 'black', 'Arial')
         if hold is not None:
-            self.draw_shape_for_queue(hold, 140, 770, queue_hold_surface)
+            self.draw_shape_for_queue(hold, 140, 740, queue_hold_surface)
         self.screen.blit(queue_hold_surface, (1480, 100))
 
     def draw_shape_for_queue(self, shape, x, y, surface):

@@ -48,12 +48,16 @@ def main():
     while True:
         if scene_id == 0:
             display.update(scene_id)
-            #do sth...
-
-            #start game when start button pressed
-            last_move_time = pygame.time.get_ticks()
-            game = Game(board_width, board_height)
-            scene_id = 1
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        # start game when start button pressed
+                        last_move_time = pygame.time.get_ticks()
+                        game = Game(board_width, board_height)
+                        scene_id = 1
 
         elif scene_id == 1:
             automove_interval = initial_automove_interval * (0.9) ** (game.level)
@@ -65,15 +69,23 @@ def main():
 
             display.update(scene_id, game)
 
+            # Go to game over screen if player lost
             if game.game_over:
-                scene_id = 0
-                del game
+                scene_id = 2
 
         elif scene_id == 2:
             display.update(scene_id)
-            # do sth...
-
-            # if pressed button to leave to main menu, del game
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        # start game when start button pressed
+                        last_move_time = pygame.time.get_ticks()
+                        del game
+                        game = Game(board_width, board_height)
+                        scene_id = 1
 
         clock.tick(30)
 

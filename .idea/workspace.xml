@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Some work on GUI">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Score and queue display">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tetrominos.py" beforeDir="false" afterPath="$PROJECT_DIR$/tetrominos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,8 +287,26 @@
       <option name="project" value="LOCAL" />
       <updated>1735512102425</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Score and queue display">
+      <created>1735519290209</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1735519290209</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
@@ -306,6 +322,7 @@
     <MESSAGE value="Scoring and loss condition" />
     <MESSAGE value="First step into creating scenes for starting screen, game screen and game over screen" />
     <MESSAGE value="Some work on GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some work on GUI" />
+    <MESSAGE value="Score and queue display" />
+    <option name="LAST_COMMIT_MESSAGE" value="Score and queue display" />
   </component>
 </project>
