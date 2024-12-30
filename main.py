@@ -46,18 +46,16 @@ def main():
     scene_id = 0
 
     while True:
+        if display.action == 'quit':
+            pygame.quit()
+            sys.exit()
         if scene_id == 0:
             display.update(scene_id)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        # start game when start button pressed
-                        last_move_time = pygame.time.get_ticks()
-                        game = Game(board_width, board_height)
-                        scene_id = 1
+            if display.action == 'play':
+                last_move_time = pygame.time.get_ticks()
+                game = Game(board_width, board_height)
+                scene_id = 1
+                display.action = None
 
         elif scene_id == 1:
             automove_interval = initial_automove_interval * (0.9) ** (game.level)

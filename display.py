@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 import configparser
 from tetrominos import tetrominos_queue_display as queue_shapes
@@ -19,13 +21,21 @@ class Display:
         self.font = pygame.font.SysFont('Go', 24)
 
         # Assets loading
+        start_background_path = config['Assets']['StartBackground']
+        game_background_path = config['Assets']['GameBackground']
         grid_background_path = config['Assets']['GridBackground']
         block_path = config['Assets']['Block']
 
+        self.start_background = pygame.image.load(start_background_path).convert()
+        self.start_background = pygame.transform.scale(self.start_background, (1920, 1080))
+        self.game_background = pygame.image.load(game_background_path).convert()
+        self.game_background = pygame.transform.scale(self.game_background, (1920, 1080))
         self.grid_background = pygame.image.load(grid_background_path).convert()
         self.grid_background = pygame.transform.scale(self.grid_background, (400, 880))
         self.block_texture = pygame.image.load(block_path).convert_alpha()
         self.block_texture = pygame.transform.scale(self.block_texture, (40, 40))
+
+        self.action = None
 
     def draw_text(self, x, y, string, surface, size, color, font):
         font = pygame.font.SysFont(font, size)
@@ -37,7 +47,7 @@ class Display:
     def update(self, scene_id, game=None):
         # Draw starting screen
         if scene_id == 0:
-            self.draw_start_screen()
+            action = self.draw_start_screen()
         # Draw playing screen
         elif scene_id == 1:
             self.draw_playing_grid(game.get_board_with_tetromino(game.board), game.ghost_piece())
@@ -48,17 +58,74 @@ class Display:
         # Draw game over screen
         elif scene_id == 2:
             self.draw_game_over_screen()
-
         # Update the display
         pygame.display.flip()
         self.screen.fill('black')
 
+    def draw_quit_button(self):
+        # Button properties
+        button_color = pygame.Color('red')
+        hover_color = pygame.Color('#8b0000')
+        outline_color = pygame.Color('black')
+        text_color = pygame.Color('white')
+        button_rect = pygame.Rect(self.window_width - 50, 10, 40, 40)
+
+        # Check if button is hovered
+        mouse_pos = pygame.mouse.get_pos()
+        if button_rect.collidepoint(mouse_pos):
+            current_button_color = hover_color
+        else:
+            current_button_color = button_color
+
+        # Outline
+        pygame.draw.rect(self.screen, outline_color, button_rect.inflate(4, 4), border_radius=5)
+
+        # Draw the button
+        pygame.draw.rect(self.screen, current_button_color, button_rect, border_radius=5)
+        self.draw_text(button_rect.centerx, button_rect.centery, "X", self.screen, 24, text_color, 'Calibri')
+
+        # Clicking the button
+        return button_rect
+
     def draw_start_screen(self):
-        title_surface = pygame.Surface((1000, 300))
-        title_surface.fill('brown')
-        self.screen.blit(title_surface, (460, 100))
+        # Draw the start background
+        self.screen.blit(self.start_background, (0, 0))
+
+        # Button properties
+        button_color = pygame.Color('#241e2e')
+        hover_color = pygame.Color('#1c181f')  # Darker color for hover effect
+        outline_color = pygame.Color('#fcf58e')
+        text_color = pygame.Color('white')
+        button_rect = pygame.Rect(780, 868, 265, 62)
+
+        # Check if button is hovered
+        mouse_pos = pygame.mouse.get_pos()
+        if button_rect.collidepoint(mouse_pos):
+            current_button_color = hover_color
+        else:
+            current_button_color = button_color
+
+        # button outline
+        pygame.draw.rect(self.screen, outline_color, button_rect.inflate(6, 6), border_radius=5)
+
+        #Draw the button with text
+        pygame.draw.rect(self.screen, current_button_color, button_rect, border_radius=5)
+        self.draw_text(button_rect.centerx, button_rect.centery, "PLAY", self.screen, 32, text_color, 'Calibri')
+
+        quit_button_rect = self.draw_quit_button()
+        # Clicking the button
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if button_rect.collidepoint(event.pos):
+                    self.action = "play"
+                if quit_button_rect.collidepoint(event.pos):
+                    self.action = "quit"
 
     def draw_playing_grid(self, board, ghost_piece):
+        self.screen.blit(self.game_background, (0, 0))
         # Initialization of surface - grid for the tetris game
         grid_surface = pygame.Surface((400, 880))
         grid_surface.blit(self.grid_background, (0, 0))

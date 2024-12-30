@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Score and queue display">
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Separated scenes for game states">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -294,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1735519290209</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Separated scenes for game states">
+      <created>1735522316124</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1735522316124</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -307,6 +315,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
@@ -323,6 +332,7 @@
     <MESSAGE value="First step into creating scenes for starting screen, game screen and game over screen" />
     <MESSAGE value="Some work on GUI" />
     <MESSAGE value="Score and queue display" />
-    <option name="LAST_COMMIT_MESSAGE" value="Score and queue display" />
+    <MESSAGE value="Separated scenes for game states" />
+    <option name="LAST_COMMIT_MESSAGE" value="Separated scenes for game states" />
   </component>
 </project>
