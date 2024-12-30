@@ -35,7 +35,8 @@ class Display:
         self.block_texture = pygame.image.load(block_path).convert_alpha()
         self.block_texture = pygame.transform.scale(self.block_texture, (40, 40))
 
-        self.action = None
+        self.play_button = None
+        self.quit_button = None
 
     def draw_text(self, x, y, string, surface, size, color, font):
         font = pygame.font.SysFont(font, size)
@@ -58,6 +59,8 @@ class Display:
         # Draw game over screen
         elif scene_id == 2:
             self.draw_game_over_screen()
+
+        self.draw_quit_button()
         # Update the display
         pygame.display.flip()
         self.screen.fill('black')
@@ -85,7 +88,7 @@ class Display:
         self.draw_text(button_rect.centerx, button_rect.centery, "X", self.screen, 24, text_color, 'Calibri')
 
         # Clicking the button
-        return button_rect
+        self.quit_button = button_rect
 
     def draw_start_screen(self):
         # Draw the start background
@@ -112,17 +115,7 @@ class Display:
         pygame.draw.rect(self.screen, current_button_color, button_rect, border_radius=5)
         self.draw_text(button_rect.centerx, button_rect.centery, "PLAY", self.screen, 32, text_color, 'Calibri')
 
-        quit_button_rect = self.draw_quit_button()
-        # Clicking the button
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if button_rect.collidepoint(event.pos):
-                    self.action = "play"
-                if quit_button_rect.collidepoint(event.pos):
-                    self.action = "quit"
+        self.play_button = button_rect
 
     def draw_playing_grid(self, board, ghost_piece):
         self.screen.blit(self.game_background, (0, 0))

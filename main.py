@@ -37,6 +37,12 @@ def handle_input(game, last_move_time):
                 game.hold()
             elif event.key == pygame.K_z:
                 game.rotate(-1)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if display.quit_button is not None and display.quit_button.collidepoint(event.pos):
+                pygame.quit()
+                sys.exit()
+
+
     return last_move_time
 
 def main():
@@ -46,16 +52,20 @@ def main():
     scene_id = 0
 
     while True:
-        if display.action == 'quit':
-            pygame.quit()
-            sys.exit()
         if scene_id == 0:
             display.update(scene_id)
-            if display.action == 'play':
-                last_move_time = pygame.time.get_ticks()
-                game = Game(board_width, board_height)
-                scene_id = 1
-                display.action = None
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if display.quit_button is not None and display.quit_button.collidepoint(event.pos):
+                        pygame.quit()
+                        sys.exit()
+                    if display.play_button is not None and display.play_button.collidepoint(event.pos):
+                        last_move_time = pygame.time.get_ticks()
+                        game = Game(board_width, board_height)
+                        scene_id = 1
 
         elif scene_id == 1:
             automove_interval = initial_automove_interval * (0.9) ** (game.level)
@@ -84,6 +94,11 @@ def main():
                         del game
                         game = Game(board_width, board_height)
                         scene_id = 1
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if display.quit_button is not None and display.quit_button.collidepoint(event.pos):
+                        pygame.quit()
+                        sys.exit()
+
 
         clock.tick(30)
 
