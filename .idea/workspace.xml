@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Leaderboards, play again button">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Decreased volume and added resolution scaling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -355,7 +353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1735834492960</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Decreased volume and added resolution scaling">
+      <created>1735844161070</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1735844161070</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -389,6 +394,7 @@
     <MESSAGE value="Working on GUI" />
     <MESSAGE value="Quit button" />
     <MESSAGE value="Leaderboards, play again button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Leaderboards, play again button" />
+    <MESSAGE value="Decreased volume and added resolution scaling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Decreased volume and added resolution scaling" />
   </component>
 </project>

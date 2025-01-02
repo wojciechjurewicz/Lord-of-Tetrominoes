@@ -15,9 +15,13 @@ class Display:
         self.board_width = int(config['BoardSettings']['Width'])
         self.board_height = int(config['BoardSettings']['Height'])
 
-        display_info = pygame.display.Info()
-        self.user_width = display_info.current_w
-        self.user_height = display_info.current_h
+        if config.getboolean('WindowSettings', 'ResolutionScaling'):
+            display_info = pygame.display.Info()
+            self.user_width = display_info.current_w
+            self.user_height = display_info.current_h
+        else:
+            self.user_width = self.window_width
+            self.user_height = self.window_height
 
         # Setting up the screen
         self.screen = pygame.display.set_mode((self.user_width, self.user_height), pygame.FULLSCREEN)
@@ -155,7 +159,7 @@ class Display:
 
         #Draw the button with text
         pygame.draw.rect(self.dummy_screen, current_button_color, button_rect, border_radius=5)
-        self.draw_text(button_rect.centerx, button_rect.centery, "PLAY", self.dummy_screen, 32, text_color, 'Calibri')
+        self.draw_text(button_rect.centerx, button_rect.centery, "PLAY", self.dummy_screen, 32, text_color, 'Arial')
 
         self.play_button = scaled_button_rect
 
@@ -262,7 +266,7 @@ class Display:
             current_button_color = button_color
         pygame.draw.rect(self.dummy_screen, outline_color, button_rect.inflate(6, 6), border_radius=5)
         pygame.draw.rect(self.dummy_screen, current_button_color, button_rect, border_radius=5)
-        self.draw_text(button_rect.centerx, button_rect.centery, "PLAY AGAIN", self.dummy_screen, 32, text_color, 'Calibri')
+        self.draw_text(button_rect.centerx, button_rect.centery, "PLAY AGAIN", self.dummy_screen, 32, text_color, 'Arial')
         self.play_button = scaled_button_rect
 
         self.dummy_screen.blit(leaderboards_surface, (778, 680))

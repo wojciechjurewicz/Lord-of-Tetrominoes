@@ -20,11 +20,13 @@ pygame.init()
 leaderboards = Leaderboards()
 display = Display()
 
+
 def change_volume():
     if pygame.mixer.music.get_volume() == 0:
         pygame.mixer.music.set_volume(volume)
     else:
         pygame.mixer.music.set_volume(0)
+
 
 def handle_input(game, last_move_time):
     for event in pygame.event.get():
@@ -56,8 +58,8 @@ def handle_input(game, last_move_time):
             if display.music_button is not None and display.music_button.collidepoint(event.pos):
                 change_volume()
 
-
     return last_move_time
+
 
 def main():
     clock = pygame.time.Clock()
@@ -135,6 +137,7 @@ def main():
                         change_volume()
 
         clock.tick(60)
+
 
 if __name__ == '__main__':
     main()
