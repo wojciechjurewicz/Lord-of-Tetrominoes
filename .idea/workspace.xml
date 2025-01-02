@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Decreased volume and added resolution scaling">
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Optiom to disable resolution scaling in config">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +50,9 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
   </component>
   <component name="RunManager" selected="Python.leaderboards">
     <configuration name="display" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -360,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1735844161070</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Optiom to disable resolution scaling in config">
+      <created>1735846632905</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1735846632905</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -395,6 +404,7 @@
     <MESSAGE value="Quit button" />
     <MESSAGE value="Leaderboards, play again button" />
     <MESSAGE value="Decreased volume and added resolution scaling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Decreased volume and added resolution scaling" />
+    <MESSAGE value="Optiom to disable resolution scaling in config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optiom to disable resolution scaling in config" />
   </component>
 </project>

@@ -28,25 +28,28 @@ def change_volume():
         pygame.mixer.music.set_volume(0)
 
 
-def handle_input(game, last_move_time):
+def handle_input(game, last_move_time_down, last_move_time_left, last_move_time_right):
+    current_time = pygame.time.get_ticks()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             leaderboards.save()
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-                game.move(0, 1)
-                last_move_time = pygame.time.get_ticks()
-            elif event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT:
                 game.move(1, 0)
+                last_move_time_right = pygame.time.get_ticks()
             elif event.key == pygame.K_LEFT:
                 game.move(-1, 0)
+                last_move_time_left = pygame.time.get_ticks()
             elif event.key == pygame.K_UP:
                 game.rotate(1)
+            elif event.key == pygame.K_DOWN:
+                game.move(0, 1)
+                last_move_time_down = pygame.time.get_ticks()
             elif event.key == pygame.K_SPACE:
                 game.hard_drop()
-                last_move_time = pygame.time.get_ticks()
+                last_move_time_down = pygame.time.get_ticks()
             elif event.key == pygame.K_c:
                 game.hold()
             elif event.key == pygame.K_z:
@@ -58,7 +61,21 @@ def handle_input(game, last_move_time):
             if display.music_button is not None and display.music_button.collidepoint(event.pos):
                 change_volume()
 
-    return last_move_time
+    pressed_keys = pygame.key.get_pressed()
+    if pressed_keys[pygame.K_DOWN]:
+        if current_time - last_move_time_down >= 120:
+            game.move(0, 1)
+            last_move_time_down = pygame.time.get_ticks()
+    if pressed_keys[pygame.K_LEFT]:
+        if current_time - last_move_time_left >= 120:
+            game.move(-1, 0)
+            last_move_time_left = pygame.time.get_ticks()
+    if pressed_keys[pygame.K_RIGHT]:
+        if current_time - last_move_time_right >= 120:
+            game.move(1, 0)
+            last_move_time_right = pygame.time.get_ticks()
+
+    return last_move_time_down, last_move_time_left, last_move_time_right
 
 
 def main():
@@ -82,7 +99,9 @@ def main():
                         pygame.quit()
                         sys.exit()
                     if display.play_button is not None and display.play_button.collidepoint(event.pos):
-                        last_move_time = pygame.time.get_ticks()
+                        last_move_time_down = pygame.time.get_ticks()
+                        last_move_time_left = pygame.time.get_ticks()
+                        last_move_time_right = pygame.time.get_ticks()
                         game = Game(board_width, board_height)
                         pygame.mixer.music.stop()
                         pygame.mixer.music.unload()
@@ -95,10 +114,10 @@ def main():
         elif scene_id == 1:
             automove_interval = initial_automove_interval * (0.9) ** (game.level)
             current_time = pygame.time.get_ticks()
-            if current_time - last_move_time >= automove_interval:
+            if current_time - last_move_time_down >= automove_interval:
                 game.move(0, 1)
-                last_move_time = pygame.time.get_ticks()
-            last_move_time = handle_input(game, last_move_time)
+                last_move_time_down = pygame.time.get_ticks()
+            last_move_time_down, last_move_time_left, last_move_time_right = handle_input(game, last_move_time_down, last_move_time_left, last_move_time_right)
 
             display.update(scene_id, game=game)
 
@@ -125,7 +144,7 @@ def main():
                         pygame.quit()
                         sys.exit()
                     if display.play_button is not None and display.play_button.collidepoint(event.pos):
-                        last_move_time = pygame.time.get_ticks()
+                        last_move_time_down = pygame.time.get_ticks()
                         del game
                         game = Game(board_width, board_height)
                         pygame.mixer.music.stop()
