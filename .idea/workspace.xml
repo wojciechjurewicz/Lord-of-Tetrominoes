@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Optiom to disable resolution scaling in config">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="99d9962e-fefa-4fb4-b561-052e108a5b85" name="Changes" comment="Code cleanup - main.py and automove speed bug fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/display.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/leaderboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/leaderboards.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -380,7 +380,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735846632905</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Code cleanup - main.py and automove speed bug fix">
+      <option name="closed" value="true" />
+      <created>1735857382666</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1735857382666</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -415,6 +423,7 @@
     <MESSAGE value="Leaderboards, play again button" />
     <MESSAGE value="Decreased volume and added resolution scaling" />
     <MESSAGE value="Optiom to disable resolution scaling in config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optiom to disable resolution scaling in config" />
+    <MESSAGE value="Code cleanup - main.py and automove speed bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code cleanup - main.py and automove speed bug fix" />
   </component>
 </project>

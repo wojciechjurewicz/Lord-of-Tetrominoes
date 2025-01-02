@@ -1,10 +1,5 @@
-import sys
-
 import numpy as np
 import random
-
-import pygame
-
 from tetrominos import tetrominos as tetrominos_shapes
 from tetrominos import jlstz_kicks, i_kicks
 
@@ -48,17 +43,16 @@ class Game():
         # Generating empty board
         self.board = np.zeros((height, width), dtype=int)
 
-        # Initial score set to 0
+        # Initial game parameters
         self.score = 0
         self.level = 1
         self.lines = 0
         self.game_over = False
+        self.piece_on_hold = None
 
         # Initialization of queue of pieces and generating first piece to play
         self.pieces_queue = []
         self.new_piece()
-
-        self.piece_on_hold = None
 
 
     # Function taking next piece from the queue and maintaining constant number of 3 pieces in the queue
@@ -88,6 +82,7 @@ class Game():
                 self.place()
 
     # Function rotating the current piece
+    # If wanted rotation is blocked, we try another one based on the wall-kicks
     def rotate(self, dr):
         kicks = self.get_kicks(self.current_tetromino.rotation, dr, self.current_tetromino.shape_name)
         for dx, dy in kicks:
@@ -195,20 +190,24 @@ class Game():
                 self.current_tetromino, self.piece_on_hold = Tetromino(self.piece_on_hold,
                                                                        True), self.current_tetromino.shape_name
 
+    # Function showing a ghost-piece (predictor where current piece will be placed)
     def ghost_piece(self):
-
         ghost_piece_position = []
 
+        # We check how many moves till collision
         dy = 0
         while not self.collision_move(0 , dy):
             dy += 1
         dy -= 1
+
+        # Return the ghost piece position once colliding vertical position has been found
         for i, row in enumerate(self.current_tetromino.shape):
             for j, value in enumerate(row):
                 if value != 0:
                     ghost_piece_position.append((self.current_tetromino.y + i + dy, self.current_tetromino.x + j))
         return ghost_piece_position
 
+    # List of rotations with offsets in case there is a collision
     def get_kicks(self, r, dr, shape_name):
         if shape_name == "I":
             return i_kicks[(r, dr)]

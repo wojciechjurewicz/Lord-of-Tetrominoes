@@ -1,11 +1,11 @@
 import sys
 import pygame
 import configparser
-from game import Game # Main game logic
-from display import Display # Pygame display
-from leaderboards import Leaderboards # Leaderboards handling
+from game import Game  # Main game logic
+from display import Display  # Pygame display
+from leaderboards import Leaderboards  # Leaderboards handling
 
-#Config loading
+# Config loading
 config = configparser.ConfigParser()
 config.read('config.ini')
 board_width = int(config['BoardSettings']['Width'])
@@ -22,6 +22,7 @@ auto_move_base = float(config['GameSettings']['AutoMoveBase'])
 pygame.init()
 leaderboards = Leaderboards()
 display = Display()
+
 
 def mute_unmute():
     if pygame.mixer.music.get_volume() == 0:
@@ -44,6 +45,7 @@ def start_game():
     pygame.mixer.music.play(-1, fade_ms=750)
 
     return 1, game, last_moves_timestamps
+
 
 # Handling input from player
 def handle_input(scene, game=None, timestamps=None):
@@ -92,6 +94,7 @@ def handle_input(scene, game=None, timestamps=None):
 
     return scene, game, timestamps
 
+
 # Handling continuous input (when key is kept press down) for smooth tetrominoes movement
 def handle_continuous_input(game, timestamps, interval=constant_move_interval):
     pressed_keys = pygame.key.get_pressed()
@@ -105,6 +108,7 @@ def handle_continuous_input(game, timestamps, interval=constant_move_interval):
     if pressed_keys[pygame.K_RIGHT] and pygame.time.get_ticks() - timestamps['right'] >= interval:
         game.move(1, 0)
         timestamps['right'] = pygame.time.get_ticks()
+
 
 def main():
     clock = pygame.time.Clock()
@@ -146,7 +150,6 @@ def main():
         elif scene_id == 2:
             display.update(scene_id, game=game, scores=leaderboards.highestscores)
             scene_id, game, last_moves_timestamps = handle_input(2, game)
-
 
         clock.tick(60)
 
