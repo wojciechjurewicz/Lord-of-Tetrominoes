@@ -177,7 +177,7 @@ class Game():
             lines_cleared += 1
 
         self.lines += lines_cleared
-        self.level = self.lines//10
+        self.level = self.lines//10 + 1
         self.score += scoring[lines_cleared]
         self.board = np.array(new_board)
 
