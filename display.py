@@ -24,7 +24,6 @@ class Display:
         start_background_path = config['Assets']['StartBackground']
         game_background_path = config['Assets']['GameBackground']
         gameover_background_path = config['Assets']['GameOverBackground']
-        grid_background_path = config['Assets']['GridBackground']
         block_path = config['Assets']['Block']
         empty_block_path = config['Assets']['EmptyBlock']
 
@@ -34,8 +33,6 @@ class Display:
         self.game_background = pygame.transform.scale(self.game_background, (1920, 1080))
         self.gameover_background = pygame.image.load(gameover_background_path).convert()
         self.gameover_background = pygame.transform.scale(self.gameover_background, (1920, 1080))
-        self.grid_background = pygame.image.load(grid_background_path).convert()
-        self.grid_background = pygame.transform.scale(self.grid_background, (400, 880))
         self.block_texture = pygame.image.load(block_path).convert_alpha()
         self.block_texture = pygame.transform.scale(self.block_texture, (40, 40))
         self.empty_block_texture = pygame.image.load(empty_block_path).convert_alpha()
@@ -43,6 +40,7 @@ class Display:
 
         self.play_button = None
         self.quit_button = None
+        self.music_button = None
 
     def draw_text(self, x, y, string, surface, size, color, font):
         font = pygame.font.SysFont(font, size)
@@ -65,6 +63,7 @@ class Display:
             self.draw_game_over_screen(game.score, scores)
 
         self.draw_quit_button()
+        self.draw_music_button()
         # Update the display
         pygame.display.flip()
         self.screen.fill('black')
@@ -93,6 +92,31 @@ class Display:
 
         # Clicking the button
         self.quit_button = button_rect
+
+    def draw_music_button(self):
+        # Button properties
+        button_color = pygame.Color('blue')
+        hover_color = pygame.Color('dark blue')
+        outline_color = pygame.Color('black')
+        text_color = pygame.Color('white')
+        button_rect = pygame.Rect(self.window_width - 100, 10, 40, 40)
+
+        # Check if button is hovered
+        mouse_pos = pygame.mouse.get_pos()
+        if button_rect.collidepoint(mouse_pos):
+            current_button_color = hover_color
+        else:
+            current_button_color = button_color
+
+        # Outline
+        pygame.draw.rect(self.screen, outline_color, button_rect.inflate(4, 4), border_radius=5)
+
+        # Draw the button
+        pygame.draw.rect(self.screen, current_button_color, button_rect, border_radius=5)
+        self.draw_text(button_rect.centerx, button_rect.centery, "♪", self.screen, 24, text_color, 'Calibri')
+
+        # Clicking the button
+        self.music_button = button_rect
 
     def draw_start_screen(self):
         # Draw the start background
