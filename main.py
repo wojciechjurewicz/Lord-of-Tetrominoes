@@ -13,6 +13,7 @@ initial_automove_interval = int(config['GameSettings']['AutoMoveInterval'])
 start_music = config['Assets']['StartMusic']
 game_music = config['Assets']['GameMusic']
 gameover_music = config['Assets']['GameOverMusic']
+volume = float(config['WindowSettings']['Volume'])
 
 pygame.init()
 
@@ -21,7 +22,7 @@ display = Display()
 
 def change_volume():
     if pygame.mixer.music.get_volume() == 0:
-        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.set_volume(volume)
     else:
         pygame.mixer.music.set_volume(0)
 
@@ -62,6 +63,7 @@ def main():
     clock = pygame.time.Clock()
     pygame.mixer.init()
     pygame.mixer.music.load(start_music)
+    pygame.mixer.music.set_volume(volume)
     pygame.mixer.music.play(-1)
     # 0 - starting screen; 1 - main game; 2 - game over screen
     scene_id = 0
@@ -132,7 +134,7 @@ def main():
                     if display.music_button is not None and display.music_button.collidepoint(event.pos):
                         change_volume()
 
-        clock.tick(30)
+        clock.tick(60)
 
 if __name__ == '__main__':
     main()
