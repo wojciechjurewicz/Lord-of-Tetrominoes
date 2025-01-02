@@ -51,7 +51,7 @@ class Display:
         textbox.center = (x, y)
         surface.blit(text, textbox)
 
-    def update(self, scene_id, game=None):
+    def update(self, scene_id, game=None, scores=None):
         # Draw starting screen
         if scene_id == 0:
             action = self.draw_start_screen()
@@ -62,7 +62,7 @@ class Display:
             self.draw_queue_hold(game.pieces_queue, game.piece_on_hold)
         # Draw game over screen
         elif scene_id == 2:
-            self.draw_game_over_screen()
+            self.draw_game_over_screen(game.score, scores)
 
         self.draw_quit_button()
         # Update the display
@@ -100,7 +100,7 @@ class Display:
 
         # Button properties
         button_color = pygame.Color('#241e2e')
-        hover_color = pygame.Color('#1c181f')  # Darker color for hover effect
+        hover_color = pygame.Color('#1c181f')
         outline_color = pygame.Color('#fcf58e')
         text_color = pygame.Color('white')
         button_rect = pygame.Rect(820, 915, 300, 70)
@@ -199,5 +199,30 @@ class Display:
         shapebox.center = (x, y)
         surface.blit(shape_surface, shapebox)
 
-    def draw_game_over_screen(self):
+    def draw_game_over_screen(self, score, scores):
         self.screen.blit(self.gameover_background, (0, 0))
+        leaderboards_surface = pygame.Surface((400, 290), pygame.SRCALPHA)
+        self.draw_text(196, 14, 'LEADERBOARDS', leaderboards_surface, 30, 'white', 'Arial')
+        self.draw_text(196, 64, f'{scores[0]}', leaderboards_surface, 30, 'gold', 'Arial')
+        self.draw_text(196, 114, f'{scores[1]}', leaderboards_surface, 30, 'silver', 'Arial')
+        self.draw_text(196, 164, f'{scores[2]}', leaderboards_surface, 30, 'brown', 'Arial')
+        self.draw_text(196, 214, 'YOUR SCORE', leaderboards_surface, 30, 'white', 'Arial')
+        self.draw_text(196, 264, f'{score}', leaderboards_surface, 30, 'white', 'Arial')
+
+        button_color = pygame.Color('#241e2e')
+        hover_color = pygame.Color('#1c181f')
+        outline_color = pygame.Color('#fcf58e')
+        text_color = pygame.Color('white')
+        button_rect = pygame.Rect(1220, 915, 300, 70)
+
+        mouse_pos = pygame.mouse.get_pos()
+        if button_rect.collidepoint(mouse_pos):
+            current_button_color = hover_color
+        else:
+            current_button_color = button_color
+        pygame.draw.rect(self.screen, outline_color, button_rect.inflate(6, 6), border_radius=5)
+        pygame.draw.rect(self.screen, current_button_color, button_rect, border_radius=5)
+        self.draw_text(button_rect.centerx, button_rect.centery, "PLAY AGAIN", self.screen, 32, text_color, 'Calibri')
+        self.play_button = button_rect
+
+        self.screen.blit(leaderboards_surface, (778, 680))

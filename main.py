@@ -3,6 +3,7 @@ import pygame
 from game import Game
 from display import Display
 import configparser
+from leaderboards import Leaderboards
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -12,12 +13,13 @@ initial_automove_interval = int(config['GameSettings']['AutoMoveInterval'])
 
 pygame.init()
 
-
+leaderboards = Leaderboards()
 display = Display()
 
 def handle_input(game, last_move_time):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            leaderboards.save()
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
@@ -50,12 +52,13 @@ def main():
 
     # 0 - starting screen; 1 - main game; 2 - game over screen
     scene_id = 0
-
+    print(leaderboards.highestscores)
     while True:
         if scene_id == 0:
             display.update(scene_id)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    leaderboards.save()
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -75,16 +78,19 @@ def main():
                 last_move_time = pygame.time.get_ticks()
             last_move_time = handle_input(game, last_move_time)
 
-            display.update(scene_id, game)
+            display.update(scene_id, game=game)
 
             # Go to game over screen if player lost
             if game.game_over:
+                leaderboards.add_score(game.score)
                 scene_id = 2
 
         elif scene_id == 2:
-            display.update(scene_id)
+            print(leaderboards.highestscores)
+            display.update(scene_id, game=game, scores=leaderboards.highestscores)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    leaderboards.save()
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
@@ -96,9 +102,13 @@ def main():
                         scene_id = 1
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if display.quit_button is not None and display.quit_button.collidepoint(event.pos):
+                        leaderboards.save()
                         pygame.quit()
                         sys.exit()
-
+                    if display.play_button is not None and display.play_button.collidepoint(event.pos):
+                        last_move_time = pygame.time.get_ticks()
+                        game = Game(board_width, board_height)
+                        scene_id = 1
 
         clock.tick(30)
 
