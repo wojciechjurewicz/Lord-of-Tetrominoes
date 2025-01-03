@@ -96,7 +96,7 @@ class Display:
         text_color = pygame.Color('white')
         button_rect = pygame.Rect(self.window_width - 50, 10, 40, 40)
         scaled_button_rect = pygame.Rect((self.window_width - 50) * (self.user_width / self.window_width),
-                                         (10) * (self.user_height / self.window_height), 40, 40)
+                                         (10) * (self.user_height / self.window_height), 40 * (self.user_width / self.window_width), 40 * (self.user_height / self.window_height))
         # Check if button is hovered
         mouse_pos = pygame.mouse.get_pos()
         if scaled_button_rect.collidepoint(mouse_pos):
@@ -122,7 +122,7 @@ class Display:
         text_color = pygame.Color('white')
         button_rect = pygame.Rect(self.window_width - 100, 10, 40, 40)
         scaled_button_rect = pygame.Rect((self.window_width - 100) * (self.user_width / self.window_width),
-                                         (10) * (self.user_height / self.window_height), 40, 40)
+                                         (10) * (self.user_height / self.window_height), 40 * (self.user_width / self.window_width), 40 * (self.user_height / self.window_height))
 
         # Check if button is hovered
         mouse_pos = pygame.mouse.get_pos()
@@ -149,7 +149,7 @@ class Display:
         text_color = pygame.Color('white')
         button_rect = pygame.Rect(self.window_width - 150, 10, 40, 40)
         scaled_button_rect = pygame.Rect((self.window_width - 150) * (self.user_width / self.window_width),
-                                         (10) * (self.user_height / self.window_height), 40, 40)
+                                         (10) * (self.user_height / self.window_height), 40 * (self.user_width / self.window_width), 40 * (self.user_height / self.window_height))
 
         # Check if button is hovered and show controls info
         mouse_pos = pygame.mouse.get_pos()

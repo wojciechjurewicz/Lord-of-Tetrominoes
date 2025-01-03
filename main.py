@@ -56,6 +56,7 @@ def handle_input(scene, game=None, timestamps=None):
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if display.quit_button is not None and display.quit_button.collidepoint(event.pos):
+                leaderboards.save()
                 pygame.quit()
                 sys.exit()
             if display.music_button is not None and display.music_button.collidepoint(event.pos):
