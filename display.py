@@ -55,7 +55,7 @@ class Display:
         self.quit_button = None
         self.music_button = None
 
-    def draw_text(self, x, y, string, surface, size, color, font='Arial'):
+    def draw_text(self, x, y, string, surface, size, color, font='Lucida Console'):
         font = pygame.font.SysFont(font, size)
         text = font.render(string, True, color)
         textbox = text.get_rect()
@@ -80,6 +80,7 @@ class Display:
         # Common buttons
         self.draw_quit_button()
         self.draw_music_button()
+        self.draw_controls_button()
 
         # Update the display
         self.dummy_screen = pygame.transform.scale(self.dummy_screen, (self.user_width, self.user_height))
@@ -115,8 +116,8 @@ class Display:
 
     def draw_music_button(self):
         # Button properties
-        button_color = pygame.Color('blue')
-        hover_color = pygame.Color('dark blue')
+        button_color = pygame.Color('orange')
+        hover_color = pygame.Color('#913b01')
         outline_color = pygame.Color('black')
         text_color = pygame.Color('white')
         button_rect = pygame.Rect(self.window_width - 100, 10, 40, 40)
@@ -139,6 +140,45 @@ class Display:
 
         # Clickable button position (adapted to user resolution)
         self.music_button = scaled_button_rect
+
+    def draw_controls_button(self):
+        # Button properties
+        button_color = pygame.Color('blue')
+        hover_color = pygame.Color('dark blue')
+        outline_color = pygame.Color('black')
+        text_color = pygame.Color('white')
+        button_rect = pygame.Rect(self.window_width - 150, 10, 40, 40)
+        scaled_button_rect = pygame.Rect((self.window_width - 150) * (self.user_width / self.window_width),
+                                         (10) * (self.user_height / self.window_height), 40, 40)
+
+        # Check if button is hovered and show controls info
+        mouse_pos = pygame.mouse.get_pos()
+
+
+        controls_surface = pygame.Surface((750, 240), pygame.SRCALPHA)
+        controls_surface.fill((0, 0, 0, 170))
+        self.draw_text(375, 20, 'CONTROLS', controls_surface, 30, 'white')
+        self.draw_text(375, 60, 'Arrow Keys: Move tetrominoes', controls_surface, 30, 'white')
+        self.draw_text(375, 100, 'Up Arrow: Rotate the tetromino clockwise', controls_surface, 30, 'white')
+        self.draw_text(375, 140, 'Spacebar: Hard drop (instantly drop)', controls_surface, 30, 'white')
+        self.draw_text(375, 180, 'Z: Rotate the tetromino counterclockwise', controls_surface, 30, 'white')
+        self.draw_text(375, 220, 'C: Hold the current tetromino', controls_surface, 30, 'white')
+
+
+        if scaled_button_rect.collidepoint(mouse_pos):
+            current_button_color = hover_color
+            self.dummy_screen.blit(controls_surface, (1100, 80))
+        else:
+            current_button_color = button_color
+
+        # Outline
+        pygame.draw.rect(self.dummy_screen, outline_color, button_rect.inflate(4, 4), border_radius=5)
+
+        # Draw the button
+        pygame.draw.rect(self.dummy_screen, current_button_color, button_rect, border_radius=5)
+        self.draw_text(button_rect.centerx, button_rect.centery, "?", self.dummy_screen, 24, text_color)
+
+
 
     def draw_start_screen(self):
         # Draw the start background
@@ -171,6 +211,10 @@ class Display:
 
         # Clickable button position (adapted to user resolution)
         self.play_button = scaled_button_rect
+
+        # Controls
+
+
 
     def draw_playing_grid(self, board, ghost_piece):
         self.dummy_screen.blit(self.game_background, (0, 0))
@@ -221,7 +265,7 @@ class Display:
 
     def draw_queue_hold(self, queue, hold):
         # Surface for pieces in queue and piece on hold
-        queue_hold_surface = pygame.Surface((280, 880), pygame.SRCALPHA)
+        queue_hold_surface = pygame.Surface((280, 840), pygame.SRCALPHA)
         queue_hold_surface.fill((0, 0, 0, 170))
         self.draw_text(140, 60, 'NEXT', queue_hold_surface, 40, 'grey')
         self.draw_shape_for_queue(queue[0], 140, 140, queue_hold_surface)
@@ -258,17 +302,17 @@ class Display:
 
         # Leaderboards
         leaderboards_surface = pygame.Surface((400, 290), pygame.SRCALPHA)
-        self.draw_text(196, 14, 'LEADERBOARDS', leaderboards_surface, 30, 'white')
-        self.draw_text(196, 64, f'{scores[0]}', leaderboards_surface, 30, 'gold')
-        self.draw_text(196, 114, f'{scores[1]}', leaderboards_surface, 30, pygame.Color((192, 192, 192)))
-        self.draw_text(196, 164, f'{scores[2]}', leaderboards_surface, 30, 'brown')
-        self.draw_text(196, 214, 'YOUR SCORE', leaderboards_surface, 30, 'white')
-        self.draw_text(196, 264, f'{score}', leaderboards_surface, 30, 'white')
+        self.draw_text(196, 15, 'LEADERBOARDS', leaderboards_surface, 30, 'white')
+        self.draw_text(196, 65, f'{scores[0]}', leaderboards_surface, 30, 'gold')
+        self.draw_text(196, 115, f'{scores[1]}', leaderboards_surface, 30, pygame.Color((192, 192, 192)))
+        self.draw_text(196, 165, f'{scores[2]}', leaderboards_surface, 30, 'brown')
+        self.draw_text(196, 215, 'YOUR SCORE', leaderboards_surface, 30, 'white')
+        self.draw_text(196, 265, f'{score}', leaderboards_surface, 30, 'white')
 
         # Play again button
         button_color = pygame.Color('#241e2e')
         hover_color = pygame.Color('#1c181f')
-        outline_color = pygame.Color('#fcf58e')
+        outline_color = pygame.Color('#c97541')
         text_color = pygame.Color('white')
         button_rect = pygame.Rect(1220, 915, 300, 70)
         scaled_button_rect = pygame.Rect((1220) * (self.user_width / self.window_width),
