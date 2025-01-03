@@ -30,6 +30,7 @@ Medival themed Tetris game made in PyGame for Algorithms And Data Models course
 - **Leaderboards**: Tracking and saving high scores in a file.
 - **Fullscreen Mode**: Play in fullscreen with automatic resolution scaling.
 - **Clickable buttons**: Buttons for muting the sound, exiting, or starting a new game.
+- **Help button**: Button displaying in-game controls.
 - **Comprehensive UI with Graphics**: Includes a starting screen, active game screen with score and next pieces, and a game over screen. Comes with background graphics and block textures.
 - **Music**: In-game music, different for all screens.
 ## Acknowledgements
@@ -39,6 +40,10 @@ Medival themed Tetris game made in PyGame for Algorithms And Data Models course
 - [Game music](https://www.youtube.com/watch?v=YmcdaiwGGXs)
 - [Game over music](https://youtu.be/jJSa1D-Inw0?si=3jE6obUtAo_Kx8Dt)
 - [Rules for Tetrominoes rotation](https://harddrop.com/wiki/SRS)
+## Repository
+
+You can find the project repository on [GitHub](https://github.com/wojciechjurewicz/Lord-of-Tetrominoes).
+
 ## Run Locally
 
 Install dependencies
